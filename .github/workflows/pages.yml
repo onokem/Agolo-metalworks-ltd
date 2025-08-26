@@ -1,0 +1,129 @@
+name: Deploy static preview to GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Prepare Laravel app
+        run: |
+          if [ ! -f .env ]; then
+            cat > .env <<'EOF'
+          APP_NAME="Agolo Steelworks"
+          APP_ENV=production
+          APP_KEY=
+          APP_DEBUG=false
+          APP_URL=http://127.0.0.1:8000
+
+          LOG_CHANNEL=stack
+          LOG_DEPRECATIONS_CHANNEL=null
+
+          DB_CONNECTION=sqlite
+          DB_DATABASE=database/database.sqlite
+
+          CACHE_DRIVER=file
+          SESSION_DRIVER=file
+          QUEUE_CONNECTION=sync
+          EOF
+          fi
+          mkdir -p database
+          : > database/database.sqlite
+          php artisan key:generate --force
+          php artisan migrate --force
+
+      - name: Start PHP server
+        run: php -S 127.0.0.1:8000 -t public >/dev/null 2>&1 &
+
+      - name: Wait for server
+        run: |
+          for i in {1..30}; do
+            if curl -sSf http://127.0.0.1:8000 >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Server did not start in time" >&2
+          exit 1
+
+      - name: Build static site
+        run: |
+          OUT=static-site
+          mkdir -p "$OUT"
+          # copy public assets (exclude PHP front controller and htaccess)
+          rsync -av --exclude='index.php' --exclude='.htaccess' public/ "$OUT"/
+          # routes to export as static HTML
+          routes=(
+            "/"
+            "/services"
+            "/portfolio"
+            "/about"
+            "/contact"
+            "/quote"
+            "/privacy"
+            "/terms"
+          )
+          for path in "${routes[@]}"; do
+            url="http://127.0.0.1:8000${path}"
+            dest="$OUT${path}"
+            mkdir -p "$dest"
+            curl -sS "$url" -o "$dest/index.html"
+          done
+          # ensure root index.html exists
+          curl -sS http://127.0.0.1:8000 -o "$OUT/index.html"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: static-site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
