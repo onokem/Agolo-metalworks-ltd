@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://agolosteelworks.co.uk/sitemap.xml
+
+# Specific pages
+Allow: /services
+Allow: /portfolio  
+Allow: /about
+Allow: /contact
+Allow: /quote
+
+# Assets
+Allow: /images/
+Allow: /build/
+Allow: /css/
+Allow: /js/
+
+# Block admin and sensitive areas
+Disallow: /admin/
+Disallow: /.env
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /config/
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1

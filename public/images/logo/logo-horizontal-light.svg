@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-labelledby="title desc">
+  <title id="title">Agolo Steelworks Horizontal Logo (Light)</title>
+  <desc id="desc">Logo mark with wordmark for light backgrounds.</desc>
+  <defs>
+    <linearGradient id="grad2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect width="260" height="64" rx="12" fill="#ffffff"/>
+  <g transform="translate(0,0)">
+    <path d="M32 8 12 18v14c0 14.2 8.6 21.7 20 24 11.4-2.3 20-9.8 20-24V18L32 8Z" fill="url(#grad2)" stroke="#1e293b" stroke-width="2"/>
+    <path d="M32 20 22 44h6l2.2-5.5h7.6L40 44h6L36 20h-4Zm0 6.8L33.9 32h-3.8L32 26.8Z" fill="#fff"/>
+    <text x="74" y="38" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="26" font-weight="700" fill="#0f172a">Agolo <tspan fill="#1d4ed8">Steelworks</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,489 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Base styles */
+:root {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Component styles */
+@layer components {
+    /* Button Components */
+    .btn-primary {
+        @apply inline-flex items-center justify-center px-6 py-3;
+        @apply text-base font-medium text-white;
+        @apply bg-blue-600 hover:bg-blue-700;
+        @apply rounded-lg shadow-lg hover:shadow-xl;
+        @apply transition-all duration-200;
+        @apply hover:-translate-y-1 active:translate-y-0;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center px-6 py-3;
+        @apply text-base font-medium text-blue-600;
+        @apply bg-white border-2 border-blue-600 hover:bg-blue-50;
+        @apply rounded-lg shadow-md hover:shadow-lg;
+        @apply transition-all duration-200;
+        @apply hover:-translate-y-1 active:translate-y-0;
+    }
+
+    /* Navigation Components */
+    .nav-link {
+        @apply text-gray-700 hover:text-blue-600;
+        @apply px-3 py-2 rounded-lg;
+        @apply text-sm font-medium;
+        @apply transition-all duration-200 relative;
+        @apply hover:bg-blue-50/50;
+        @apply hover:-translate-y-0.5;
+    }
+
+    .nav-link.active {
+        @apply text-blue-600 bg-blue-50;
+        @apply shadow-sm;
+    }
+
+    .mobile-nav-link {
+        @apply text-gray-700 hover:text-blue-600 hover:bg-blue-50;
+        @apply flex items-center px-4 py-3;
+        @apply rounded-lg text-base font-medium;
+        @apply transition-all duration-200;
+        @apply hover:translate-x-1;
+    }
+
+    .mobile-nav-link.active {
+        @apply text-blue-600 bg-blue-50;
+        @apply border-l-4 border-blue-600;
+    }
+
+    /* Service Components */
+    .service-icon {
+        @apply w-16 h-16 mx-auto mb-4;
+        @apply bg-gradient-to-br from-blue-50 to-blue-100;
+        @apply rounded-xl flex items-center justify-center;
+        @apply text-blue-600;
+        @apply transition-all duration-300;
+        @apply group-hover:scale-110 group-hover:shadow-lg;
+    }
+
+    /* Form Components */
+    .form-input {
+        @apply w-full px-4 py-3;
+        @apply border border-gray-300 rounded-lg;
+        @apply focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+        @apply transition-all duration-200;
+        @apply hover:border-blue-300;
+    }
+    
+    .form-label {
+        @apply block text-sm font-medium text-gray-700;
+        @apply mb-1;
+    }
+
+    .form-error {
+        @apply text-sm text-red-600 mt-1;
+    }
+
+    .form-success {
+        @apply text-sm text-green-600 mt-1;
+    }
+}
+
+
+/* Custom animations and components for Agolo Steelworks */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce-slow {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slide-in-left 0.8s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slide-in-right 0.8s ease-out forwards;
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+}
+
+/* Enhanced responsive aspect ratio utilities */
+.aspect-w-16 {
+    position: relative;
+    padding-bottom: 75%; /* 16:12 aspect ratio */
+    overflow: hidden;
+    border-radius: 0.75rem;
+}
+
+.aspect-w-16 > * {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.aspect-w-3 {
+    position: relative;
+    padding-bottom: 133.33%; /* 3:4 aspect ratio */
+    overflow: hidden;
+    border-radius: 0.75rem;
+}
+
+/* Services page specific styles */
+@layer components {
+    .service-heading {
+        @apply text-2xl font-bold text-gray-900 mb-4;
+    }
+
+    .service-description {
+        @apply text-gray-600 mb-6;
+    }
+
+    .service-list {
+        @apply flex flex-col gap-3;
+    }
+
+    .service-list-item {
+        @apply flex items-center text-gray-600;
+    }
+
+    .service-check-icon {
+        @apply w-5 h-5 text-blue-600 mr-3;
+    }
+}
+.btn-primary {
+    @apply inline-flex items-center px-6 py-3 text-base font-medium rounded-md transition-colors duration-200;
+}
+
+.btn-secondary {
+    @apply inline-flex items-center px-6 py-3 text-base font-medium rounded-md border-2 transition-colors duration-200;
+}
+
+/* Services page specific styles */
+.service-icon {
+    @apply w-12 h-12 text-blue-600 mb-4;
+}
+
+.service-heading {
+    @apply text-2xl font-bold text-gray-900 mb-4;
+}
+
+.service-description {
+    @apply text-gray-600 mb-6;
+}
+
+.service-list {
+    @apply space-y-3;
+}
+
+.service-list-item {
+    @apply flex items-center text-gray-600;
+}
+
+.service-check-icon {
+    @apply w-5 h-5 text-blue-600 mr-3;
+}
+
+.aspect-w-3 > * {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.aspect-w-4 {
+    position: relative;
+    padding-bottom: 75%; /* 4:3 aspect ratio */
+    overflow: hidden;
+    border-radius: 0.75rem;
+}
+
+.aspect-w-4 > * {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+/* Enhanced navigation styles */
+.nav-link {
+    @apply text-gray-700 hover:text-blue-600 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative;
+}
+
+.nav-link:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    @apply text-blue-600 bg-blue-50;
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.mobile-nav-link {
+    @apply text-gray-700 hover:text-blue-600 hover:bg-blue-50 flex items-center px-4 py-3 rounded-lg text-base font-medium transition-all duration-200;
+}
+
+.mobile-nav-link:hover {
+    transform: translateX(4px);
+}
+
+.mobile-nav-link.active {
+    @apply text-blue-600 bg-blue-50;
+    border-left: 3px solid #2563eb;
+}
+
+/* Enhanced hero section */
+.hero-overlay {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(37, 99, 235, 0.4));
+    backdrop-filter: blur(2px);
+}
+
+.hero-title {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Card hover effects */
+.card-hover {
+    @apply transition-all duration-300 hover:shadow-xl cursor-pointer;
+    transform-origin: center;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Enhanced button styles */
+.btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl;
+    transform: translateY(0);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium text-blue-600 bg-white border-2 border-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-1px);
+    border-color: #1d4ed8;
+}
+
+/* Service card enhancements */
+.service-card {
+    @apply bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100;
+    transform: translateY(0);
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.service-icon {
+    @apply w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl flex items-center justify-center text-blue-600 transition-all duration-300;
+}
+
+.service-card:hover .service-icon {
+    @apply bg-gradient-to-br from-blue-100 to-blue-200 scale-110;
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Stats section enhancements */
+.stats-number {
+    @apply text-4xl font-bold text-blue-600 mb-2;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Testimonial enhancements */
+.testimonial-card {
+    @apply bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Form enhancements */
+.form-input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+}
+
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Loading spinner */
+.spinner {
+    border: 2px solid #f3f4f6;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+    .hero-title {
+        @apply text-3xl leading-tight;
+    }
+    
+    .section-title {
+        @apply text-2xl;
+    }
+    
+    .service-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .stats-number {
+        @apply text-3xl;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        @apply text-4xl;
+    }
+    
+    .btn-primary, .btn-secondary {
+        @apply px-5 py-2.5 text-sm;
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+.focus-ring:focus {
+    @apply ring-2 ring-blue-500 ring-offset-2 outline-none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Selection styling */
+::selection {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #1e40af;
+}
+
+/* Utility classes */
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+}
