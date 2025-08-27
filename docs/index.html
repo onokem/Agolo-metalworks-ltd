@@ -1,20 +1,1111 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="FooAmUMDbDywOLvJAOgr5Sf7QFiO2HerbmNWvlmE">
 
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+    
+    <title>Professional Welding &amp; Metal Fabrication Services | Agolo Steelworks Ltd - Wigan, UK</title>
+    <meta name="description" content="Expert welding and metal fabrication services in Wigan and Northwest UK. Structural welding, custom fabrication, repairs, and mobile welding. Call +44 7397 105077 for a free quote.">
+    <meta name="keywords" content="welding services Wigan, metal fabrication UK, structural welding, custom metalwork, mobile welding, steel fabrication Northwest England">
+    
+    
+    <meta property="og:title" content="Agolo Steelworks Ltd - Professional Welding Services Wigan">
+    <meta property="og:description" content="Expert welding and metal fabrication services in Wigan and Northwest UK">
+    <meta property="og:image" content="http://localhost:8000/images/agolo-steelworks-workshop.jpg">
+    <meta property="og:url" content="http://localhost:8000">
+    <meta property="og:type" content="website">
+    
+    
+    <script type="application/ld+json">
+        {"<?php $__contextArgs = [];\r\nif (context()->has($__contextArgs[0])) :\r\nif (isset($value)) { $__contextPrevious[] = $value; }\r\n$value = context()->get($__contextArgs[0]); ?>":"https://schema.org","@type":"LocalBusiness","name":"Agolo Steelworks Ltd","image":"http://localhost:8000/images/agolo-steelworks-logo.jpg","address":{"@type":"PostalAddress","streetAddress":"2 Palm Grove","addressLocality":"Wigan","postalCode":"WN5 9QB","addressCountry":"GB"},"geo":{"@type":"GeoCoordinates","latitude":53.5444,"longitude":-2.6342},"telephone":"+447397105077","priceRange":"$$","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"08:00","closes":"12:00"}],"url":"http://localhost:8000","sameAs":["https://www.facebook.com/agolosteelworks","https://www.linkedin.com/company/agolo-steelworks"],"description":"Professional welding and metal fabrication services in Wigan and Northwest UK. Specializing in structural welding, custom fabrication, repairs, and mobile welding services."}
+    </script>
 
-define('LARAVEL_START', microtime(true));
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:8000/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:8000/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:8000/apple-touch-icon.png">
+    <link rel="manifest" href="http://localhost:8000/site.webmanifest">
+    <link rel="mask-icon" href="http://localhost:8000/images/logo/logo-mark.svg" color="#2563eb">
+    <meta name="msapplication-TileColor" content="#0f172a">
+    <meta name="theme-color" content="#2563eb">
 
-// Determine if the application is in maintenance mode...
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
+    
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
-// Register the Composer autoloader...
-require __DIR__.'/../vendor/autoload.php';
+    
+    <link rel="preload" as="style" href="http://localhost:8000/build/assets/app-C7wYEmNF.css" /><link rel="modulepreload" as="script" href="http://localhost:8000/build/assets/app-CpEksR3F.js" /><link rel="stylesheet" href="http://localhost:8000/build/assets/app-C7wYEmNF.css" /><script type="module" src="http://localhost:8000/build/assets/app-CpEksR3F.js"></script>    
+    
+    <style>
+    .nav-link {
+        @apply text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+    }
+    .nav-link.active {
+        @apply text-blue-600 bg-blue-50;
+    }
+    .mobile-nav-link {
+        @apply text-gray-700 hover:text-blue-600 hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200;
+    }
+    .mobile-nav-link.active {
+        @apply text-blue-600 bg-blue-50;
+    }
+    .aspect-w-16 {
+        position: relative;
+        padding-bottom: 75%; /* 16:12 aspect ratio */
+    }
+    .aspect-w-16 > * {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .aspect-w-3 {
+        position: relative;
+        padding-bottom: 133.33%; /* 3:4 aspect ratio */
+    }
+    .aspect-w-3 > * {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .aspect-w-4 {
+        position: relative;
+        padding-bottom: 75%; /* 4:3 aspect ratio */
+    }
+    .aspect-w-4 > * {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+    
+    
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body class="font-sans antialiased bg-gray-50 selection:bg-blue-100 selection:text-blue-900">
+    
+    <nav class="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="http://localhost:8000" class="flex items-center space-x-3 group" aria-label="Agolo Steelworks Home">
+                        <img src="http://localhost:8000/images/logo/logo-mark.svg" alt="Agolo Steelworks Logo" class="w-10 h-10" width="40" height="40" loading="eager">
+                        <span class="text-xl font-bold text-gray-900 hidden sm:block tracking-tight">Agolo Steelworks</span>
+                        <span class="text-lg font-bold text-gray-900 sm:hidden tracking-tight">Agolo</span>
+                    </a>
+                </div>
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
-$app = require_once __DIR__.'/../bootstrap/app.php';
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-1 lg:space-x-4">
+                        <a href="http://localhost:8000" class="nav-link active"  aria-current="page" >Home</a>
+                        <a href="http://localhost:8000/services" class="nav-link " >Services</a>
+                        <a href="http://localhost:8000/portfolio" class="nav-link " >Portfolio</a>
+                        <a href="http://localhost:8000/about" class="nav-link " >About</a>
+                        <a href="http://localhost:8000/contact" class="nav-link " >Contact</a>
+                        <a href="http://localhost:8000/quote" class="ml-2 lg:ml-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Get Quote</a>
+                    </div>
+                </div>
 
-$app->handleRequest(Request::capture());
+                
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="menu-icon block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="close-icon hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200 shadow-lg" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="http://localhost:8000" class="mobile-nav-link active"  aria-current="page" >Home</a>
+                <a href="http://localhost:8000/services" class="mobile-nav-link " >Services</a>
+                <a href="http://localhost:8000/portfolio" class="mobile-nav-link " >Portfolio</a>
+                <a href="http://localhost:8000/about" class="mobile-nav-link " >About</a>
+                <a href="http://localhost:8000/contact" class="mobile-nav-link " >Contact</a>
+                <a href="http://localhost:8000/quote" class="block w-full text-left mt-4 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-base font-medium transition-colors duration-200">Get Quote</a>
+            </div>
+        </div>
+
+    </nav>
+
+    <main id="main" class="min-h-[40vh]">
+        
+<section class="relative bg-gray-900 overflow-hidden">
+    
+    <div class="absolute inset-0">
+        <picture>
+            <source srcset="http://localhost:8000/images/hero/workshop-hero.webp" type="image/webp">
+            <img src="http://localhost:8000/images/hero/fabrication-hero.jpg" 
+                 alt="Agolo Steelworks Workshop" 
+                 class="w-full h-full object-cover">
+        </picture>
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-blue-900/80"></div>
+    </div>
+    
+    
+    <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
+            
+            <div class="max-w-md mx-auto lg:max-w-none lg:mx-0">
+                <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+                    Professional <span class="text-blue-400">Welding</span> & Metal Fabrication
+                </h1>
+                <p class="mt-6 text-xl text-gray-300 leading-8">
+                    Expert welding and metal fabrication services serving Wigan and the Northwest UK. Quality craftsmanship with over 15 years of experience in structural welding, custom fabrication, and repair services.
+                </p>
+                
+                
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <a href="http://localhost:8000/quote" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200 shadow-lg">
+                        Get Free Quote
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="http://localhost:8000/services" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 rounded-md transition-colors duration-200">
+                        View Services
+                    </a>
+                </div>
+
+                
+                <div class="mt-8 flex items-center space-x-6">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        </svg>
+                        <a href="tel:+447397105077" class="text-white hover:text-blue-400 font-medium">+44 7397 105077</a>
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="text-white">Wigan & Northwest UK</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="mt-12 lg:mt-0 lg:ml-8">
+                <div class="aspect-w-3 aspect-h-4 rounded-lg overflow-hidden shadow-2xl relative group">
+                    <picture>
+                        <source srcset="http://localhost:8000/images/hero/workshop-hero.webp" type="image/webp">
+                        <img src="http://localhost:8000/images/hero/workshop-detail.jpeg" alt="Agolo Steelworks workshop detail" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+                        <span class="inline-block px-2 py-1 text-xs bg-blue-600/90 rounded mb-2">Recent Project</span>
+                        <h3 class="text-lg font-semibold leading-snug">Precision Structural Welding In Progress</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div class="animate-bounce">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </div>
+</section>
+
+
+<section class="bg-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                        <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">500+</div>
+                <div class="text-sm text-gray-600 mt-1">Projects Completed</div>
+            </div>
+                        <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">15+</div>
+                <div class="text-sm text-gray-600 mt-1">Years Experience</div>
+            </div>
+                        <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">98%</div>
+                <div class="text-sm text-gray-600 mt-1">Client Satisfaction</div>
+            </div>
+                        <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600">Northwest UK</div>
+                <div class="text-sm text-gray-600 mt-1">Service Area</div>
+            </div>
+                    </div>
+    </div>
+</section>
+
+
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Our Welding Services</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Comprehensive welding and metal fabrication services tailored to meet your specific requirements
+            </p>
+        </div>
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="aspect-w-16 aspect-h-9">
+                    <picture>
+                        <source srcset="http://localhost:8000/images/services/structural-welding.webp" type="image/webp">
+                        <img src="http://localhost:8000/images/services/structural-welding.jpeg" 
+                             alt="Structural Welding Services" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Structural Welding</h3>
+                    <p class="text-gray-600 mb-4">Expert structural welding services for commercial and industrial projects, ensuring integrity and durability.</p>
+                    
+                    <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Building frameworks
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Steel beams & supports
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Load-bearing components
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="aspect-w-16 aspect-h-9">
+                    <picture>
+                        <source srcset="http://localhost:8000/images/services/metal-fabrication.webp" type="image/webp">
+                        <img src="http://localhost:8000/images/services/metal-fabrication.jpeg" 
+                             alt="Metal Fabrication Services" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Metal Fabrication</h3>
+                    <p class="text-gray-600 mb-4">Custom metal fabrication services for creating bespoke metal components to your exact specifications.</p>
+                    
+                    <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Custom metal parts
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Precision cutting & forming
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Specialty metal solutions
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="aspect-w-16 aspect-h-9">
+                    <picture>
+                        <source srcset="http://localhost:8000/images/services/silo-welding.webp" type="image/webp">
+                        <img src="http://localhost:8000/images/services/silo-welding.jpeg" 
+                             alt="Silo Welding Services" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Industrial Welding</h3>
+                    <p class="text-gray-600 mb-4">Specialized industrial welding services for silos, tanks, and large-scale industrial equipment.</p>
+                    
+                    <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Storage silos & tanks
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Industrial machinery
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            High-pressure equipment
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="aspect-w-16 aspect-h-9">
+                    <picture>
+                        <source srcset="http://localhost:8000/images/services/onsite-welding.webp" type="image/webp">
+                        <img src="http://localhost:8000/images/services/onsite-welding.jpeg" 
+                             alt="On-Site Welding Services" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             loading="lazy" decoding="async">
+                    </picture>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Mobile Welding</h3>
+                    <p class="text-gray-600 mb-4">Convenient on-site welding services bringing our expertise to your location for repairs and installations.</p>
+                    
+                    <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Emergency repairs
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            On-site installation
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            Field modifications
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="text-center mt-12">
+            <a href="http://localhost:8000/services" class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200">
+                View All Services
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Premium Gate Designs</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Explore our collection of custom-designed gates featuring elegant designs, durability, and premium craftsmanship
+            </p>
+        </div>
+
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/gate-custom.jpg" alt="Custom MS Gate Work" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Custom MS Gate Design</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/laser-cut-gate.jpg" alt="Laser Cut Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Laser Cut Designed Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/wrought-iron-gate.jpg" alt="Wrought Iron Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Classic Wrought Iron Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/white-gate.jpg" alt="White Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Modern White Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/stainless-gate.jpeg" alt="Stainless Steel Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Stainless Steel Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/garden-gate.jpg" alt="Garden Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Short Metal Path Garden Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/aluminium-gate.jpeg" alt="Aluminium Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Modern Aluminium Gate</h3>
+                </div>
+            </div>
+
+            <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+                <img src="http://localhost:8000/images/portfolio/composite-gate.jpg" alt="Composite Gate" class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <h3 class="text-white font-medium">Composite Material Gate</h3>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="text-center mt-12">
+            <a href="http://localhost:8000/portfolio" class="btn-primary">
+                View All Gate Designs
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Featured Projects</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Showcasing our expertise through completed welding and fabrication projects across the Northwest UK
+            </p>
+        </div>
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="group cursor-pointer">
+                <div class="relative aspect-w-16 aspect-h-12 rounded-lg overflow-hidden">
+                    <picture>
+                                                                            
+                                                        <source srcset="http://localhost:8000/agolomage/structural welding.webp" type="image/webp">
+                                                <img src="http://localhost:8000/agolomage/structural welding.jpeg" alt="Structural Welding On Site" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 text-white translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="inline-block px-2 py-1 text-[10px] tracking-wide uppercase bg-blue-600/90 rounded mb-2">Structural Welding</span>
+                        <h3 class="text-lg font-semibold leading-snug mb-1">Structural Welding On Site</h3>
+                        <p class="text-xs text-gray-200 line-clamp-2">Precision structural welding carried out on-site ensuring integrity and compliance.</p>
+                        <p class="text-[11px] mt-1 text-blue-200">📍 Wigan Industrial Estate</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <span class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full mb-2">Structural Welding</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Structural Welding On Site</h3>
+                    <p class="text-gray-600 text-sm mb-2">Precision structural welding carried out on-site ensuring integrity and compliance.</p>
+                    <p class="text-sm text-gray-500">📍 Wigan Industrial Estate</p>
+                </div>
+            </div>
+                        <div class="group cursor-pointer">
+                <div class="relative aspect-w-16 aspect-h-12 rounded-lg overflow-hidden">
+                    <picture>
+                                                                            
+                                                        <source srcset="http://localhost:8000/agolomage/laser cut designed gate.webp" type="image/webp">
+                                                <img src="http://localhost:8000/agolomage/laser cut designed gate.jpg" alt="Custom Gate Fabrication" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 text-white translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="inline-block px-2 py-1 text-[10px] tracking-wide uppercase bg-blue-600/90 rounded mb-2">Custom Fabrication</span>
+                        <h3 class="text-lg font-semibold leading-snug mb-1">Custom Gate Fabrication</h3>
+                        <p class="text-xs text-gray-200 line-clamp-2">Laser cut and hand‑finished premium gate with intricate modern pattern.</p>
+                        <p class="text-[11px] mt-1 text-blue-200">📍 Manchester City Centre</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <span class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full mb-2">Custom Fabrication</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Custom Gate Fabrication</h3>
+                    <p class="text-gray-600 text-sm mb-2">Laser cut and hand‑finished premium gate with intricate modern pattern.</p>
+                    <p class="text-sm text-gray-500">📍 Manchester City Centre</p>
+                </div>
+            </div>
+                        <div class="group cursor-pointer">
+                <div class="relative aspect-w-16 aspect-h-12 rounded-lg overflow-hidden">
+                    <picture>
+                                                                            
+                                                        <source srcset="http://localhost:8000/agolomage/fabrication workshop.webp" type="image/webp">
+                                                <img src="http://localhost:8000/agolomage/fabrication workshop.jpg" alt="Fabrication Workshop Operations" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" loading="lazy" decoding="async">
+                    </picture>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 text-white translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="inline-block px-2 py-1 text-[10px] tracking-wide uppercase bg-blue-600/90 rounded mb-2">Workshop Fabrication</span>
+                        <h3 class="text-lg font-semibold leading-snug mb-1">Fabrication Workshop Operations</h3>
+                        <p class="text-xs text-gray-200 line-clamp-2">In‑house fabrication workflow delivering consistent quality and fast turnaround.</p>
+                        <p class="text-[11px] mt-1 text-blue-200">📍 Liverpool Facility</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <span class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full mb-2">Workshop Fabrication</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Fabrication Workshop Operations</h3>
+                    <p class="text-gray-600 text-sm mb-2">In‑house fabrication workflow delivering consistent quality and fast turnaround.</p>
+                    <p class="text-sm text-gray-500">📍 Liverpool Facility</p>
+                </div>
+            </div>
+                    </div>
+
+        
+        <div class="text-center mt-12">
+            <a href="http://localhost:8000/portfolio" class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200">
+                View Full Portfolio
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">About Agolo Steelworks</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Professional welding and fabrication expertise serving Wigan and Northwest UK since 2010
+            </p>
+        </div>
+
+        <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+            
+            <div class="mb-8 lg:mb-0 grid grid-cols-2 gap-4">
+                <div class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="http://localhost:8000/images/about/team-workshop.jpg" alt="Team at Workshop" class="w-full h-full object-cover aspect-w-1 aspect-h-1">
+                </div>
+                <div class="grid grid-rows-2 gap-4">
+                    <div class="relative overflow-hidden rounded-lg shadow-lg">
+                        <img src="http://localhost:8000/images/about/office-team.jpeg" alt="Office Team" class="w-full h-full object-cover">
+                    </div>
+                    <div class="relative overflow-hidden rounded-lg shadow-lg">
+                        <img src="http://localhost:8000/images/about/team-planning.jpg" alt="Team Planning" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl mb-6">Why Choose Agolo Steelworks?</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    With over 15 years of experience serving Wigan and the Northwest UK, we've built our reputation on quality craftsmanship, reliable service, and customer satisfaction.
+                </p>
+                
+                
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-600 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Certified Professionals</h3>
+                            <p class="text-gray-600">Fully qualified welders with industry certifications and extensive experience</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-600 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Modern Equipment</h3>
+                            <p class="text-gray-600">State-of-the-art welding equipment and tools for precision work</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-blue-600 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Mobile Service Available</h3>
+                            <p class="text-gray-600">On-site welding services bringing our expertise to your location</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <a href="http://localhost:8000/about" class="inline-flex items-center px-6 py-3 text-base font-medium text-blue-600 bg-white border border-blue-600 hover:bg-blue-50 rounded-md transition-colors duration-200">
+                        Learn More About Us
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="mt-12 lg:mt-0">
+                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                    <div class="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                        <div class="text-center text-gray-700">
+                            <svg class="w-20 h-20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-6H5.83L12 5.83 18.17 12H17v6z"/>
+                            </svg>
+                            <p class="text-sm">Workshop Facility</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">What Our Clients Say</h2>
+            <p class="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                Don't just take our word for it - hear from satisfied clients across the Northwest UK
+            </p>
+        </div>
+
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                
+                <div class="flex items-center mb-4">
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                    </div>
+
+                
+                <p class="text-gray-600 mb-4">"Outstanding quality workmanship and professional service. Agolo Steelworks delivered our structural steel project on time and to the highest standards."</p>
+
+                
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-sm">J</span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">John Mitchell</p>
+                        <p class="text-sm text-gray-500">Mitchell Construction Ltd</p>
+                    </div>
+                </div>
+            </div>
+                        <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                
+                <div class="flex items-center mb-4">
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                    </div>
+
+                
+                <p class="text-gray-600 mb-4">"Excellent collaboration on our architectural metalwork project. The attention to detail and craftsmanship exceeded our expectations."</p>
+
+                
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-sm">S</span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">Sarah Thompson</p>
+                        <p class="text-sm text-gray-500">Thompson Architects</p>
+                    </div>
+                </div>
+            </div>
+                        <div class="bg-gray-50 rounded-lg p-6 shadow-sm">
+                
+                <div class="flex items-center mb-4">
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                                    </div>
+
+                
+                <p class="text-gray-600 mb-4">"Reliable emergency repair service saved our production line. Professional, efficient, and reasonably priced."</p>
+
+                
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-sm">D</span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">David Wilson</p>
+                        <p class="text-sm text-gray-500">Wilson Manufacturing</p>
+                    </div>
+                </div>
+            </div>
+                    </div>
+    </div>
+</section>
+
+
+<section class="bg-blue-600 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-white sm:text-4xl mb-4">Ready to Start Your Project?</h2>
+        <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            Get a free, no-obligation quote for your welding and fabrication needs. Our experienced team is ready to help bring your project to life.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="http://localhost:8000/quote" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-blue-600 bg-white hover:bg-gray-50 rounded-md transition-colors duration-200 shadow-lg">
+                Get Free Quote
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+            <a href="tel:+447397105077" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-transparent border-2 border-white hover:bg-white hover:text-blue-600 rounded-md transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                </svg>
+                Call Now: +44 7397 105077
+            </a>
+        </div>
+    </div>
+</section>
+    </main>
+
+    
+    <footer class="bg-gray-900 text-gray-300 mt-16" aria-label="Footer">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        </div>
+                        <span class="text-xl font-bold">Agolo Steelworks Ltd</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 text-sm sm:text-base leading-relaxed">Professional welding and metal fabrication services serving Wigan and the Northwest UK. Quality craftsmanship with over 15 years of experience.</p>
+                    <div class="space-y-3 mb-6 text-sm">
+                        <div class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg><a href="tel:+447397105077" class="hover:text-white transition-colors">+44 7397 105077</a></div>
+                        <div class="flex items-center"><svg class="w-5 h-5 mr-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg><a href="mailto:info@agolosteelworks.co.uk" class="hover:text-white transition-colors">info@agolosteelworks.co.uk</a></div>
+                        <div class="flex items-start"><svg class="w-5 h-5 mr-3 mt-0.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg><div><div>2 Palm Grove</div><div>Wigan, WN5 9QB</div><div>United Kingdom</div></div></div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition" aria-label="Facebook"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition" aria-label="LinkedIn"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition" aria-label="Twitter"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="http://localhost:8000/services" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm">Our Services</a></li>
+                        <li><a href="http://localhost:8000/portfolio" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm">Portfolio</a></li>
+                        <li><a href="http://localhost:8000/about" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm">About Us</a></li>
+                        <li><a href="http://localhost:8000/quote" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm">Get Quote</a></li>
+                        <li><a href="http://localhost:8000/contact" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Services</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="text-gray-300">Structural Welding</li>
+                        <li class="text-gray-300">Custom Fabrication</li>
+                        <li class="text-gray-300">Mobile Welding</li>
+                        <li class="text-gray-300">Repair Services</li>
+                        <li class="text-gray-300">Emergency Repairs</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700">
+                <div class="flex flex-col sm:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">&copy; 2025 Agolo Steelworks Ltd. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 sm:mt-0">
+                        <a href="http://localhost:8000/privacy" class="text-gray-300 hover:text-white text-sm transition-colors duration-200">Privacy Policy</a>
+                        <a href="http://localhost:8000/terms" class="text-gray-300 hover:text-white text-sm transition-colors duration-200">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Enhanced mobile menu toggle with improved UX
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const menuIcon = document.querySelector('.menu-icon');
+            const closeIcon = document.querySelector('.close-icon');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                    
+                    // Toggle menu visibility
+                    mobileMenu.classList.toggle('hidden');
+                    
+                    // Update button state
+                    mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Toggle icons
+                    if (menuIcon && closeIcon) {
+                        menuIcon.classList.toggle('hidden');
+                        closeIcon.classList.toggle('hidden');
+                    }
+                    
+                    // Add slide animation
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.style.opacity = '0';
+                        mobileMenu.style.transform = 'translateY(-10px)';
+                        setTimeout(() => {
+                            mobileMenu.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                            mobileMenu.style.opacity = '1';
+                            mobileMenu.style.transform = 'translateY(0)';
+                        }, 10);
+                    }
+                });
+                
+                // Close mobile menu when clicking on links
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        if (menuIcon && closeIcon) {
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        if (menuIcon && closeIcon) {
+                            menuIcon.classList.remove('hidden');
+                            closeIcon.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+            
+            // Smooth scroll behavior for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add scroll-based navbar styling
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('nav');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Add shadow when scrolled
+                if (scrollTop > 0) {
+                    navbar.classList.add('shadow-lg');
+                    navbar.classList.remove('shadow-lg');
+                    navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                } else {
+                    navbar.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+            
+            // Add loading states for buttons
+            document.querySelectorAll('a[href*="quote"], a[href*="contact"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.href.startsWith('#')) {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Loading...';
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Add intersection observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe sections for animations
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Add hover effects for cards
+            document.querySelectorAll('.card-hover, .group').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+    
+    <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add animation to stats on scroll
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections for animations
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+</script>
+</body>
+</html>
+
