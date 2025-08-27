@@ -53,3 +53,6 @@ pnpm-lock.yaml
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Local caches
+DevDrivenpm-cache/
