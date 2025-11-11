@@ -289,25 +289,39 @@ function D = apply_prediction_modulation(D, predictions)
     D.PV_pred = pv_hat;
     D.WT_pred = wt_hat;
     D.LD_pred = ld_hat;
-    D.mfPV = repmat(scale_series(pv_hat),1,Nb1);
-    D.mfWT = repmat(scale_series(wt_hat),1,Nb1);
-    D.mf   = repmat(scale_series(ld_hat),1,Nb1);
+    pv_scaled = scale_series(pv_hat);
+    wt_scaled = scale_series(wt_hat);
+    ld_scaled = scale_series(ld_hat);
+    D.mfPV = repmat(pv_scaled,1,Nb1);
+    D.mfWT = repmat(wt_scaled,1,Nb1);
+    D.mf   = repmat(ld_scaled,1,Nb1);
     D.pred_currents = convert_predictions_to_currents(D, pv_hat, wt_hat, ld_hat);
 end
 function pred_curr = convert_predictions_to_currents(D, pv_hat, wt_hat, ld_hat)
+    T = size(D.Ia,1);
     Nb1 = numel(D.R);
-    T = numel(pv_hat);
-    pf_bounds = D.PF;
-    pf_mid = mean(pf_bounds);
-    alpha = tan(acos(pf_mid));
-    scale = 1 ./ max(D.Sbase_MVA,1e-3);
-    Ipv = (pv_hat * scale);
-    Iwt = (wt_hat * scale);
-    Ild = (ld_hat * scale);
-    curr = struct();
-    curr.active   = repmat(Ipv + Iwt - Ild, 1, Nb1);
-    curr.reactive = alpha * curr.active;
-    curr.voltage  = compute_voltage_profile(D, D.Ia, D.Ir);
+    maxCurrent = getfield_def(D,'Im_max',1);
+    mfPV = ensure_modulation_shape(getfield_def(D,'mfPV',ones(T,Nb1)), T, Nb1);
+    mfWT = ensure_modulation_shape(getfield_def(D,'mfWT',ones(T,Nb1)), T, Nb1);
+    mfLD = ensure_modulation_shape(getfield_def(D,'mf',ones(T,Nb1)), T, Nb1);
+    pv_amp = maxCurrent * scale_series(pv_hat);
+    wt_amp = maxCurrent * scale_series(wt_hat);
+    ld_amp = maxCurrent * scale_series(ld_hat);
+    pv_pattern = repmat(pv_amp,1,Nb1) .* mfPV;
+    wt_pattern = repmat(wt_amp,1,Nb1) .* mfWT;
+    ld_pattern = repmat(ld_amp,1,Nb1) .* mfLD;
+    alpha_pv = repmat(pf_to_alpha(pf_series(D,'pv')),1,Nb1);
+    alpha_wt = repmat(pf_to_alpha(pf_series(D,'wt')),1,Nb1);
+    alpha_ld = repmat(pf_to_alpha(pf_series(D,'load')),1,Nb1);
+    Ia_pred = D.Ia - pv_pattern - wt_pattern + ld_pattern;
+    Ir_pred = D.Ir - pv_pattern .* alpha_pv - wt_pattern .* alpha_wt + ld_pattern .* alpha_ld;
+    state = build_state(D, Ia_pred, Ir_pred);
+    pred_curr = struct('active', Ia_pred, ...
+                       'reactive', Ir_pred, ...
+                       'voltage', state.V, ...
+                       'PL', state.PL, ...
+                       'QL', state.QL, ...
+                       'VD', state.VD);
 end
 function optim = run_all_methods(D, opts)
     alg = default_algo();
@@ -532,67 +546,173 @@ function val = imo_objective(D, cfg)
           w(3) * VD / max(baseVD,1e-6) + state.penalty;
 end
 function state = apply_resources(D, cfg)
-    if iscell(cfg)
-        configs = [cfg{:}];
-    else
-        configs = cfg;
-    end
+    configs = normalize_configs(cfg);
     Ia = D.Ia;
     Ir = D.Ir;
+    for k = 1:numel(configs)
+        [Ia, Ir] = apply_single_resource(D, Ia, Ir, configs(k));
+    end
+    state = build_state(D, Ia, Ir);
+end
+function configs = normalize_configs(cfg)
+    if isempty(cfg)
+        configs = struct([]);
+    elseif iscell(cfg)
+        configs = [cfg{:}];
+    else
+        configs = cfg(:);
+    end
+end
+function [Ia, Ir] = apply_single_resource(D, Ia, Ir, cfg)
     Nb1 = numel(D.R);
     T = size(Ia,1);
-    for k = 1:numel(configs)
-        bus = max(2,min(configs(k).bus, Nb1+1));
-        mask = zeros(1,Nb1);
-        mask(1:bus-1) = 1;
-        a = tan(acos(max(min(configs(k).pf,1),-1)));
-        scale = configs(k).size;
-        mf = choose_modulation(D, configs(k));
-        Ia = Ia - scale * mf .* repmat(mask,T,1);
-        Ir = Ir - scale * a * mf .* repmat(mask,T,1);
+    sizeAmp = min(max(getfield_def(cfg,'size',0),0), getfield_def(D,'Im_max',1));
+    if sizeAmp <= 0
+        return;
     end
+    bus = max(2, min(round(getfield_def(cfg,'bus',2)), Nb1+1));
+    maskRow = zeros(1,Nb1);
+    maskRow(1:bus-1) = 1;
+    mask = repmat(maskRow, T, 1);
+    mf = choose_modulation(D, cfg);
+    pattern = mf .* mask;
+    alpha = alpha_from_pf(getfield_def(cfg,'pf', mean(getfield_def(D,'PF',[0.9 1.0]))));
+    Ia = Ia - sizeAmp * pattern;
+    Ir = Ir - sizeAmp * pattern .* alpha;
+end
+function state = build_state(D, Ia, Ir)
+    PL = branch_losses(D.R, Ia, Ir);
+    QL = branch_losses(D.X, Ia, Ir);
+    VD = voltage_dev(D, Ia, Ir);
+    Vb = compute_voltage_profile(D, Ia, Ir);
     PL0 = branch_losses(D.R, D.Ia, D.Ir);
     QL0 = branch_losses(D.X, D.Ia, D.Ir);
     VD0 = voltage_dev(D, D.Ia, D.Ir);
-    PLn = branch_losses(D.R, Ia, Ir);
-    QLn = branch_losses(D.X, Ia, Ir);
-    VDn = voltage_dev(D, Ia, Ir);
-    Vb  = compute_voltage_profile(D, Ia, Ir);
+    penalty = compute_penalty(D, Ia, Ir, Vb);
+    state = struct('Ia',Ia,'Ir',Ir,'PL',PL,'QL',QL,'VD',VD, ...
+                   'PL0',PL0,'QL0',QL0,'VD0',VD0,'penalty',penalty,'V',Vb);
+end
+function penalty = compute_penalty(D, Ia, Ir, V)
     penalty = 0;
+    Nb1 = numel(D.R);
     if isfield(D,'Smax') && ~isempty(D.Smax)
-        Slim = reshape(D.Smax,1,[]);
-        Suse = abs(Vb(:,1:end-1)).*sqrt(Ia.^2 + Ir.^2);
-        excess = max(0, bsxfun(@minus, Suse, Slim));
-        penalty = penalty + 1e3 * sum(excess(:).^2);
+        Slim = expand_branch_limit(D.Smax, Nb1);
+        if ~isempty(Slim)
+            Suse = abs(V(:,1:Nb1)).*sqrt(Ia.^2 + Ir.^2);
+            excess = max(0, Suse - repmat(Slim, size(Ia,1),1));
+            penalty = penalty + 1e3 * sum(excess(:).^2);
+        end
     end
-    vMin = getfield_def(D,'Vmin',0.95);
-    vMax = getfield_def(D,'Vmax',1.05);
-    if ~isscalar(vMin)
-        vMin = min(vMin(:));
+    Nb = Nb1 + 1;
+    vMin = expand_bus_limit(getfield_def(D,'Vmin',0.95), Nb, 0.95);
+    vMax = expand_bus_limit(getfield_def(D,'Vmax',1.05), Nb, 1.05);
+    lowViol = max(0, repmat(vMin, size(V,1),1) - V);
+    highViol = max(0, V - repmat(vMax, size(V,1),1));
+    penalty = penalty + 1e3 * sum(lowViol(:).^2 + highViol(:).^2);
+end
+function mf = ensure_modulation_shape(mf, T, Nb1)
+    if isequal(size(mf), [T, Nb1])
+        return
     end
-    if ~isscalar(vMax)
-        vMax = max(vMax(:));
+    if isvector(mf) && numel(mf)==T
+        mf = repmat(mf(:), 1, Nb1);
+    else
+        mf = ones(T, Nb1);
     end
-    lowViol = max(0, vMin - min(Vb,[],2));
-    highViol = max(0, max(Vb,[],2) - vMax);
-    penalty = penalty + 1e3 * sum(lowViol.^2 + highViol.^2);
-    state = struct('Ia',Ia,'Ir',Ir,'PL',PLn,'QL',QLn,'VD',VDn, ...
-                   'PL0',PL0,'QL0',QL0,'VD0',VD0,'penalty',penalty, ...
-                   'V',Vb);
+end
+function pf = pf_series(D, type)
+    T = size(D.Ia,1);
+    base = mean(getfield_def(D,'PF',[0.9 1.0]));
+    pf = base * ones(T,1);
+    fieldName = '';
+    switch lower(string(type))
+        case "pv"
+            fieldName = 'PF_t_bus_PV';
+        case "wt"
+            fieldName = 'PF_t_bus_WT';
+        otherwise
+            fieldName = '';
+    end
+    if ~isempty(fieldName) && isfield(D, fieldName) && ~isempty(D.(fieldName))
+        series = D.(fieldName);
+        if size(series,1) == T
+            pf = mean(series,2);
+        end
+    elseif isfield(D,'PF_t') && ~isempty(D.PF_t)
+        series = D.PF_t;
+        if size(series,1) == T
+            if isvector(series)
+                pf = series(:);
+            else
+                pf = mean(series,2);
+            end
+        end
+    end
+    pf = clamp_pf_values(pf(:));
+end
+function alpha = pf_to_alpha(pf_series_vals)
+    alpha = tan(acos(pf_series_vals));
+end
+function alpha = alpha_from_pf(pf)
+    pf_val = clamp_pf_values(pf);
+    if numel(pf_val) > 1
+        pf_val = pf_val(1);
+    end
+    alpha = tan(acos(pf_val));
+end
+function pf = clamp_pf_values(pf)
+    pf = min(max(pf, -0.999), 0.999);
+    pf(~isfinite(pf)) = 0.95;
+end
+function vec = expand_branch_limit(val, Nb1)
+    if isempty(val)
+        vec = [];
+        return
+    end
+    if isscalar(val)
+        vec = repmat(val,1,Nb1);
+    else
+        tmp = reshape(val,1,[]);
+        if numel(tmp) == Nb1
+            vec = tmp;
+        else
+            vec = repmat(tmp(1),1,Nb1);
+        end
+    end
+end
+function vec = expand_bus_limit(val, Nb, defaultVal)
+    if isempty(val)
+        vec = repmat(defaultVal,1,Nb);
+        return
+    end
+    if isscalar(val)
+        vec = repmat(val,1,Nb);
+    else
+        tmp = reshape(val,1,[]);
+        if numel(tmp) == Nb
+            vec = tmp;
+        else
+            vec = repmat(tmp(1),1,Nb);
+        end
+    end
 end
 function mf = choose_modulation(D, cfg)
+    T = size(D.Ia,1);
+    Nb1 = numel(D.R);
+    defaultMF = ones(T, Nb1);
     if isfield(cfg,'type')
         switch lower(string(cfg.type))
             case "wt"
-                mf = getfield_def(D,'mfWT',D.mf);
+                raw = getfield_def(D,'mfWT',defaultMF);
             case "pv"
-                mf = getfield_def(D,'mfPV',D.mf);
+                raw = getfield_def(D,'mfPV',defaultMF);
             otherwise
-                mf = getfield_def(D,'mf',ones(size(D.Ia)));
+                raw = getfield_def(D,'mf',defaultMF);
         end
     else
-        mf = getfield_def(D,'mf',ones(size(D.Ia)));
+        raw = getfield_def(D,'mf',defaultMF);
     end
+    mf = ensure_modulation_shape(raw, T, Nb1);
 end
 function PL = branch_losses(weights, Ia, Ir)
     term = bsxfun(@times, Ia.^2 + Ir.^2, reshape(weights,1,[]));
@@ -615,14 +735,14 @@ function V = compute_voltage_profile(D, Ia, Ir)
     end
 end
 function cases = compute_case_metrics(D, optim)
-    base = apply_resources(D, struct('bus',2,'size',0,'pf',0.95));
+    baseState = build_state(D, D.Ia, D.Ir);
     pvCfg = pv_case(optim.best.z);
     wtCfg = wt_case(optim.best.z);
     pv   = apply_resources(D, pvCfg);
     wt   = apply_resources(D, wtCfg);
     both = apply_resources(D, [pvCfg, wtCfg]);
     cases = struct();
-    cases.base = summarise_case(D, base, 'Base');
+    cases.base = summarise_case(D, baseState, 'Base');
     cases.caseI = summarise_case(D, pv, 'Case I (PV)');
     cases.caseII = summarise_case(D, wt, 'Case II (WT)');
     cases.caseIII = summarise_case(D, both, 'Case III (PV+WT)');
@@ -845,7 +965,11 @@ function [smooth, last] = ewma_series(x, a)
     end
 end
 function s = scale_series(y)
-    denom = max([max(y(:)), 0]) + 1e-6;
+    finiteMax = max(y(:),[],'omitnan');
+    if isempty(finiteMax) || ~isfinite(finiteMax)
+        finiteMax = 0;
+    end
+    denom = max(finiteMax, 0) + 1e-6;
     s = y(:) / denom;
 end
 function z = normalize_series(y)

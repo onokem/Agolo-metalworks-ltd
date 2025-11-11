@@ -45,6 +45,12 @@ function testWorkflowOutputs(tc)
     cur = out.audit.pred_currents;
     verifyTrue(tc, isfield(cur,'active'));
     verifySize(tc, cur.active, [tc.TestData.T, numel(D.R)]);
+    verifyTrue(tc, isfield(cur,'PL'));
+    verifySize(tc, cur.PL, [tc.TestData.T, 1]);
+    verifyTrue(tc, isfield(cur,'QL'));
+    verifySize(tc, cur.QL, [tc.TestData.T, 1]);
+    verifyTrue(tc, isfield(cur,'VD'));
+    verifySize(tc, cur.VD, [tc.TestData.T, 1]);
 end
 function testTablesShape(tc)
     D = tc.TestData.D;
