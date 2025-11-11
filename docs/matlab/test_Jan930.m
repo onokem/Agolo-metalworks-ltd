@@ -37,6 +37,9 @@ function testWorkflowOutputs(tc)
     verifyTrue(tc, isfield(out.tables,'prediction'));
     verifyTrue(tc, isfield(out.tables,'optimisation'));
     verifyTrue(tc, isstruct(out.audit));
+    verifyTrue(tc, isfield(out.audit,'dataset'));
+    verifyEqual(tc, out.audit.dataset.nBranches, numel(D.R));
+    verifyEqual(tc, out.audit.dataset.nb, numel(D.R)+1);
     verifyEqual(tc, out.audit.optimisation.best.method, out.best.method);
     verifyTrue(tc, isfield(out.audit,'pred_currents'));
     cur = out.audit.pred_currents;

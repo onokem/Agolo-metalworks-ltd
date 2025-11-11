@@ -14,6 +14,9 @@ D = struct('R',R,'X',X,'Ia',Ia,'Ir',Ir,'mf',ones(T,numel(R)), ...
            'PV',PV,'WT',WT,'LD',LD);
 opts = {'methods',{'PSO','HYB'},'includePSO',true,'nP',8,'it',12,'seed',321,'plots',false,'tables',true};
 out = Jan930(D, opts{:});
+if isfield(out,'audit') && isfield(out.audit,'dataset')
+    fprintf('Dataset buses  : %d (branches: %d)\n', out.audit.dataset.nb, out.audit.dataset.nBranches);
+end
 fprintf('Best objective J: %.4f\n', out.best.J);
 fprintf('Chosen method   : %s\n', out.best.method);
 fprintf('Best bus/size/pf: [%d, %.3f, %.3f]\n', out.best.z.bus, out.best.z.size, out.best.z.pf);

@@ -84,7 +84,7 @@ function D = make_default_dataset(params)
     PF = params.PF;
     Sbase = getfield_def(params,'Sbase',100);
     Vll   = getfield_def(params,'Vll',12.66);
-    [R_ohm, X_ohm] = feeder_data(nb);
+    [R_ohm, X_ohm, nBranches] = feeder_data(nb);
     Zb = (Vll^2) / Sbase;
     R = R_ohm ./ Zb;
     X = X_ohm ./ Zb;
@@ -93,11 +93,13 @@ function D = make_default_dataset(params)
     D = struct('R',R,'X',X,'Ia',Ia,'Ir',Ir,'V0',V0,'PF',PF);
     D.Sbase_MVA = Sbase;
     D.Vll_kV = Vll;
+    D.nb = nb;
+    D.nBranches = nBranches;
     D.mf = ones(T, numel(R));
     D.mfPV = D.mf;
     D.mfWT = D.mf;
 end
-function [R_ohm, X_ohm] = feeder_data(nb)
+function [R_ohm, X_ohm, nBranches] = feeder_data(nb)
     switch nb
         case 33
             R_ohm = [0.0922 0.4930 0.3660 0.3811 0.8190 0.1872 1.7114 1.0300 ...
@@ -130,12 +132,19 @@ function [R_ohm, X_ohm] = feeder_data(nb)
         otherwise
             error('Only IEEE-33 and IEEE-69 feeders are provided.');
     end
+    nBranches = numel(R_ohm);
 end
 function D = finalize_dataset(D, opts)
     if ~isfield(D,'Sbase_MVA'), D.Sbase_MVA = 100; end
     if ~isfield(D,'Vll_kV'),   D.Vll_kV   = 12.66; end
     if ~isfield(D,'Im_max'),   D.Im_max   = 2.0; end
     if ~isfield(D,'dt'),       D.dt       = 1.0; end
+    if ~isfield(D,'nBranches') || isempty(D.nBranches)
+        D.nBranches = numel(D.R);
+    end
+    if ~isfield(D,'nb') || isempty(D.nb)
+        D.nb = D.nBranches + 1;
+    end
     if ~isfield(D,'mf'),       D.mf       = ones(size(D.Ia)); end
     if ~isfield(D,'mfPV'),     D.mfPV     = D.mf; end
     if ~isfield(D,'mfWT'),     D.mfWT     = D.mf; end
@@ -680,6 +689,8 @@ function g = gain(val, base)
 end
 function audit = build_audit_payload(D, opts, predictions, optim, cases, tables)
     audit = struct();
+    audit.dataset = struct('nb', getfield_def(D,'nb',numel(D.R)+1), ...
+                           'nBranches', getfield_def(D,'nBranches',numel(D.R)));
     audit.options = opts;
     audit.weights = getfield_def(D,'w',[0.6 0.2 0.2]);
     audit.predictions = predictions;
