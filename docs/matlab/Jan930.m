@@ -50,6 +50,7 @@ function [D, opts] = parse_inputs(varargin)
         args = {};
     end
     opts = default_options();
+    assert(mod(numel(args),2)==0, 'Options must be key/value pairs.');
     for k = 1:2:numel(args)
         key = args{k};
         val = args{k+1};
@@ -256,16 +257,21 @@ end
 function rows = prediction_rows(name, truth, pred)
     models = fieldnames(pred);
     rows = cell(numel(models),5);
+    truth = truth(:);
     for i = 1:numel(models)
         yhat = pred.(models{i})(:);
         rows{i,1} = name;
         rows{i,2} = models{i};
         rows{i,3} = mape(truth, yhat);
-        rows{i,4} = mean(abs(truth(:)-yhat(:))); 
-        rows{i,5} = sqrt(mean((truth(:)-yhat(:)).^2));
+        rows{i,4} = mean(abs(truth - yhat));
+        rows{i,5} = sqrt(mean((truth - yhat).^2));
     end
 end
-function val = mape(y, yhat); y = y(:); yhat = yhat(:); val = mean(abs(y - yhat) ./ max(abs(y),1e-6)) * 100; end
+function val = mape(y, yhat)
+    y = y(:);
+    yhat = yhat(:);
+    val = mean(abs(y - yhat) ./ max(abs(y),1e-6)) * 100;
+end
 function D = apply_prediction_modulation(D, predictions)
     Nb1 = numel(D.R);
     pv_hat = predictions.PV.TPE(:);
@@ -298,8 +304,8 @@ function optim = run_all_methods(D, opts)
     alg = default_algo();
     nP = ternary(isempty(opts.nP), alg.nP, opts.nP);
     it = ternary(isempty(opts.it), alg.it, opts.it);
-    methods = unique(upper(string(opts.methods)));
-    if opts.includePSO
+    methods = unique(upper(string(opts.methods)), 'stable');
+    if opts.includePSO && ~any(methods == "PSO")
         methods(end+1) = "PSO"; %#ok<AGROW>
     end
     results = struct();
@@ -377,14 +383,15 @@ end
 function res = build_result(name, best, hist)
     cfg = build_config(best.x);
     res = struct();
-    res.method    = name;
-    res.z         = cfg;
-    res.J         = best.f;
-    res.iterations= hist.iterations;
-    res.history   = hist.best;
+    res.method     = name;
+    res.z          = cfg;
+    res.J          = best.f;
+    res.iterations = hist.iterations;
+    res.history    = hist.best(:);
 end
 function cfg = build_config(x)
     cfg = struct('bus', round(x(1)), 'size', max(x(2),0), 'pf', max(min(x(3),1),0));
+    cfg.type = 'pv';
 end
 function vec = cfg_vector(cfg)
     vec = [cfg.bus; cfg.size; cfg.pf];
@@ -397,7 +404,8 @@ function cfg = build_config_from_mask(mask)
     cfg = struct('bus', idx+1, 'size', 0.5, 'pf', 0.95);
 end
 function cfg = refine_bus_config(D, cfg)
-    obj = @(v) imo_objective(D, struct('bus',cfg.bus,'size',v(1),'pf',v(2)));
+    cfgType = getfield_def(cfg,'type','pv');
+    obj = @(v) imo_objective(D, struct('bus',cfg.bus,'size',v(1),'pf',v(2),'type',cfgType));
     bounds = [0 D.Im_max; D.PF(1) D.PF(2)];
     [best, hist] = continuous_pso(@(x)obj(x), bounds, 12, 40);
     cfg.size = best.x(1);
@@ -545,26 +553,44 @@ function state = apply_resources(D, cfg)
     if isfield(D,'Smax') && ~isempty(D.Smax)
         Slim = reshape(D.Smax,1,[]);
         Suse = abs(Vb(:,1:end-1)).*sqrt(Ia.^2 + Ir.^2);
-        penalty = penalty + 1e3 * sum(max(0, Suse - Slim).^2, 'all');
+        excess = max(0, bsxfun(@minus, Suse, Slim));
+        penalty = penalty + 1e3 * sum(excess(:).^2);
     end
-    penalty = penalty + 1e3 * sum(max(0, D.Vmin - min(Vb,[],2)).^2 + ...
-                                  max(0, max(Vb,[],2) - D.Vmax).^2);
+    vMin = getfield_def(D,'Vmin',0.95);
+    vMax = getfield_def(D,'Vmax',1.05);
+    if ~isscalar(vMin)
+        vMin = min(vMin(:));
+    end
+    if ~isscalar(vMax)
+        vMax = max(vMax(:));
+    end
+    lowViol = max(0, vMin - min(Vb,[],2));
+    highViol = max(0, max(Vb,[],2) - vMax);
+    penalty = penalty + 1e3 * sum(lowViol.^2 + highViol.^2);
     state = struct('Ia',Ia,'Ir',Ir,'PL',PLn,'QL',QLn,'VD',VDn, ...
                    'PL0',PL0,'QL0',QL0,'VD0',VD0,'penalty',penalty, ...
                    'V',Vb);
 end
 function mf = choose_modulation(D, cfg)
-    if isfield(cfg,'type') && strcmpi(cfg.type,'wt')
-        mf = getfield_def(D,'mfWT',D.mf);
+    if isfield(cfg,'type')
+        switch lower(string(cfg.type))
+            case "wt"
+                mf = getfield_def(D,'mfWT',D.mf);
+            case "pv"
+                mf = getfield_def(D,'mfPV',D.mf);
+            otherwise
+                mf = getfield_def(D,'mf',ones(size(D.Ia)));
+        end
     else
-        mf = getfield_def(D,'mfPV',D.mf);
+        mf = getfield_def(D,'mf',ones(size(D.Ia)));
     end
 end
 function PL = branch_losses(weights, Ia, Ir)
-    PL = sum(weights .* (Ia.^2 + Ir.^2), 2);
+    term = bsxfun(@times, Ia.^2 + Ir.^2, reshape(weights,1,[]));
+    PL = sum(term, 2);
 end
 function VD = voltage_dev(D, Ia, Ir)
-    drops = D.R .* Ia + D.X .* Ir;
+    drops = bsxfun(@times, Ia, reshape(D.R,1,[])) + bsxfun(@times, Ir, reshape(D.X,1,[]));
     VD = sum(drops.^2, 2);
 end
 function V = compute_voltage_profile(D, Ia, Ir)
@@ -581,9 +607,11 @@ function V = compute_voltage_profile(D, Ia, Ir)
 end
 function cases = compute_case_metrics(D, optim)
     base = apply_resources(D, struct('bus',2,'size',0,'pf',0.95));
-    pv   = apply_resources(D, struct('bus',optim.best.z.bus,'size',optim.best.z.size,'pf',optim.best.z.pf));
-    wt   = apply_resources(D, struct('bus',max(3,optim.best.z.bus+1),'size',optim.best.z.size,'pf',optim.best.z.pf));
-    both = apply_resources(D, [pv_case(optim.best.z), wt_case(optim.best.z)]);
+    pvCfg = pv_case(optim.best.z);
+    wtCfg = wt_case(optim.best.z);
+    pv   = apply_resources(D, pvCfg);
+    wt   = apply_resources(D, wtCfg);
+    both = apply_resources(D, [pvCfg, wtCfg]);
     cases = struct();
     cases.base = summarise_case(D, base, 'Base');
     cases.caseI = summarise_case(D, pv, 'Case I (PV)');
@@ -594,7 +622,9 @@ function cfg = pv_case(z)
     cfg = z; cfg.type = 'pv';
 end
 function cfg = wt_case(z)
-    cfg = z; cfg.type = 'wt'; cfg.bus = cfg.bus + 1;
+    cfg = z;
+    cfg.type = 'wt';
+    cfg.bus = cfg.bus + 1;
 end
 function summary = summarise_case(D, state, label)
     summary = struct();
@@ -632,18 +662,22 @@ function tbl = optimisation_table(optim, cases)
     };
     tbl = struct('headers', {names}, 'rows', rows, 'method', optim.best.method);
 end
-function tbl = energy_reduction_table(D, cases)
+function tbl = energy_reduction_table(~, cases)
     basePL = mean(cases.base.PL);
     tbl = struct();
     tbl.headers = {'Case','PL Reduction (%)','Vmin Gain (pu)'};
     tbl.rows = {
-        cases.caseI.label,  reduction_pct(cases.caseI.PL, basePL),  gain(min(cases.caseI.Vmin), min(cases.base.Vmin));
-        cases.caseII.label, reduction_pct(cases.caseII.PL, basePL), gain(min(cases.caseII.Vmin), min(cases.base.Vmin));
-        cases.caseIII.label,reduction_pct(cases.caseIII.PL, basePL),gain(min(cases.caseIII.Vmin), min(cases.base.Vmin));
+        cases.caseI.label,  reduction_pct(mean(cases.caseI.PL), basePL),  gain(min(cases.caseI.Vmin), min(cases.base.Vmin));
+        cases.caseII.label, reduction_pct(mean(cases.caseII.PL), basePL), gain(min(cases.caseII.Vmin), min(cases.base.Vmin));
+        cases.caseIII.label,reduction_pct(mean(cases.caseIII.PL), basePL),gain(min(cases.caseIII.Vmin), min(cases.base.Vmin));
     };
 end
-function pct = reduction_pct(val, base); pct = (1 - val / max(base,1e-6)) * 100; end
-function g = gain(val, base); g = val - base; end
+function pct = reduction_pct(val, base)
+    pct = (1 - val / max(base,1e-6)) * 100;
+end
+function g = gain(val, base)
+    g = val - base;
+end
 function audit = build_audit_payload(D, opts, predictions, optim, cases, tables)
     audit = struct();
     audit.options = opts;
@@ -659,7 +693,7 @@ end
 function plot_outputs(D, predictions, cases, optim)
     cols = {'r','g','b','m','k','y'};
     t = D.t_hours;
-    if has_forecasts(D)
+    if has_forecasts(D) && isfield(predictions,'PV') && isfield(predictions,'WT') && isfield(predictions,'LD')
         draw_prediction('PV', t, D.PV, predictions.PV, cols);
         draw_prediction('WT', t, D.WT, predictions.WT, cols);
         draw_prediction('Load', t, D.LD, predictions.LD, cols);
@@ -668,7 +702,12 @@ function plot_outputs(D, predictions, cases, optim)
     end
     hist = optim.history;
     draw_history('Objective by Iteration', hist, cols, false);
-    draw_history('Convergence', structfun(@cumminSeries, hist, 'UniformOutput', false), cols, true);
+    convHist = struct();
+    histNames = fieldnames(hist);
+    for i = 1:numel(histNames)
+        convHist.(histNames{i}) = cumminSeries(hist.(histNames{i}));
+    end
+    draw_history('Convergence', convHist, cols, true);
     Nb1 = numel(D.R); buses = 1:Nb1;
     pv_sizes = zeros(1,Nb1); wt_sizes = zeros(1,Nb1);
     pv_bus = max(1, optim.best.z.bus-1);
@@ -742,7 +781,9 @@ function draw_ess_plots(D, cols)
     figure('Name','ESS Efficiency'); hold on; grid on; plot(t, eta, cols{2}, 'DisplayName','Efficiency'); legend show; xlabel('Time (hr)');
     figure('Name','PV+WT+ESS vs Load'); hold on; grid on; plot(t, D.PV, cols{1}, 'DisplayName','PV'); plot(t, D.WT, cols{2}, 'DisplayName','WT'); plot(t, D.LD, cols{5}, 'DisplayName','Load'); plot(t, PMW, cols{3}, 'DisplayName','ESS Power'); legend show; xlabel('Time (hr)');
 end
-function data = cumminSeries(series); data = cummin(series(:)); end
+function data = cumminSeries(series)
+    data = cummin(series(:));
+end
 function plot_case_series(name, t, cases, cols, extractor)
     figure('Name', name); hold on; grid on;
     plot(t, extractor(cases.base), cols{5}, 'DisplayName','Base');
@@ -753,9 +794,10 @@ function plot_case_series(name, t, cases, cols, extractor)
 end
 function [PLb, QLb, VDb] = per_bus_indices(D, cfg)
     state = apply_resources(D, cfg);
-    PLb = sum(D.R .* (state.Ia.^2 + state.Ir.^2), 1);
-    QLb = sum(D.X .* (state.Ia.^2 + state.Ir.^2), 1);
-    VDb = sum((D.R .* state.Ia + D.X .* state.Ir).^2, 1);
+    PLb = sum(bsxfun(@times, state.Ia.^2 + state.Ir.^2, reshape(D.R,1,[])), 1);
+    QLb = sum(bsxfun(@times, state.Ia.^2 + state.Ir.^2, reshape(D.X,1,[])), 1);
+    drops = bsxfun(@times, state.Ia, reshape(D.R,1,[])) + bsxfun(@times, state.Ir, reshape(D.X,1,[]));
+    VDb = sum(drops.^2, 1);
 end
 function validate_jan930_inputs(D, opts)
     req = {'R','X','Ia','Ir','V0','PF'};
@@ -771,8 +813,14 @@ function validate_jan930_inputs(D, opts)
     assert(isscalar(D.V0) && isfinite(D.V0), 'V0 must be scalar.');
     assert(isvector(D.PF) && numel(D.PF)==2, 'PF must be 1x2 vector.');
     assert(D.PF(1)>0 && D.PF(2)<=1 && D.PF(1)<=D.PF(2), 'Invalid PF bounds.');
-    if isfield(D,'mf')
+    if isfield(D,'mf') && ~isempty(D.mf)
         assert(isequal(size(D.mf), size(D.Ia)), 'mf must match Ia size.');
+    end
+    if isfield(D,'mfPV') && ~isempty(D.mfPV)
+        assert(isequal(size(D.mfPV), size(D.Ia)), 'mfPV must match Ia size.');
+    end
+    if isfield(D,'mfWT') && ~isempty(D.mfWT)
+        assert(isequal(size(D.mfWT), size(D.Ia)), 'mfWT must match Ia size.');
     end
     if isfield(D,'dt'), assert(isfinite(D.dt) && D.dt>0, 'dt must be positive.'); end
     if isfield(opts,'methods'), assert(iscell(opts.methods) || isstring(opts.methods), 'methods must be list.'); end
@@ -785,8 +833,14 @@ function [smooth, last] = ewma_series(x, a)
         smooth(i) = last;
     end
 end
-function s = scale_series(y); s = y(:) / max(y(:) + 1e-6); end
-function z = normalize_series(y); y = y(:); z = (y - mean(y)) / max(std(y),1e-6); end
+function s = scale_series(y)
+    denom = max([max(y(:)), 0]) + 1e-6;
+    s = y(:) / denom;
+end
+function z = normalize_series(y)
+    y = y(:);
+    z = (y - mean(y)) / max(std(y),1e-6);
+end
 function val = getfield_def(S, field, default)
     if isstruct(S) && isfield(S,field) && ~isempty(S.(field))
         val = S.(field);
@@ -794,4 +848,10 @@ function val = getfield_def(S, field, default)
         val = default;
     end
 end
-function val = ternary(cond, a, b); if cond, val = a; else, val = b; end; end
+function val = ternary(cond, a, b)
+    if cond
+        val = a;
+    else
+        val = b;
+    end
+end
